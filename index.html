@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nawar Tlay | Backend Engineer Portfolio</title>
+  <meta name="description" content="Nawar Tlay — Software Engineering student focused on Laravel, PHP, and REST APIs. Projects, skills, and competitive programming." />
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          boxShadow: {
+            glow: "0 0 0 1px rgba(255,255,255,.06), 0 20px 60px rgba(0,0,0,.55)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #070A12;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
+      --text: #EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --accentA: #FF7A18; /* orange */
+      --accentB: #7C3AED; /* violet */
+      --accentC: #22C55E; /* green */
+    }
+    body{ background: var(--bg); color: var(--text); }
+    :focus-visible { outline: 2px solid rgba(255,122,24,.9); outline-offset: 3px; }
+
+    /* Background: grid + animated gradient */
+    .bg-grid{
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(234,240,255,.08) 1px, transparent 0),
+        radial-gradient(circle at 1px 1px, rgba(124,58,237,.18) 1px, transparent 0);
+      background-size: 22px 22px, 44px 44px;
+      background-position: 0 0, 10px 10px;
+    }
+    .blob{
+      filter: blur(60px);
+      opacity: .55;
+      transform: translateZ(0);
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .blob.b2{ animation-delay: -2.5s; }
+    .blob.b3{ animation-delay: -5s; }
+    @keyframes floaty{
+      0%,100%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(0,-18px,0) scale(1.06); }
+    }
+
+    /* Cards */
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 1.25rem;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .ring-gradient{
+      position: relative;
+      overflow: hidden;
+    }
+    .ring-gradient::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: linear-gradient(120deg, rgba(255,122,24,.6), rgba(124,58,237,.55), rgba(34,197,94,.35));
+      opacity:.85;
+      filter: blur(18px);
+      z-index:0;
+    }
+    .ring-gradient > *{ position: relative; z-index:1; }
+
+    /* Reveal on scroll */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: translateY(0); }
+
+    /* Pill tags */
+    .tag{
+      border: 1px solid rgba(234,240,255,.14);
+      background: rgba(234,240,255,.04);
+      padding: .35rem .65rem;
+      border-radius: 9999px;
+      font-size: .8rem;
+      color: rgba(234,240,255,.85);
+      white-space: nowrap;
+    }
+
+    /* Fancy underline */
+    .u{
+      background-image: linear-gradient(90deg, rgba(255,122,24,.95), rgba(124,58,237,.95));
+      background-size: 100% 2px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+
+<body class="font-sans">
+  <!-- Background -->
+  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden bg-grid">
+    <div class="absolute -top-32 -left-24 h-80 w-80 rounded-full blob" style="background: radial-gradient(circle, rgba(255,122,24,.9), transparent 65%);"></div>
+    <div class="absolute top-24 -right-28 h-96 w-96 rounded-full blob b2" style="background: radial-gradient(circle, rgba(124,58,237,.9), transparent 65%);"></div>
+    <div class="absolute bottom-[-140px] left-1/2 -translate-x-1/2 h-[28rem] w-[28rem] rounded-full blob b3" style="background: radial-gradient(circle, rgba(34,197,94,.55), transparent 65%);"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="mt-4 card px-4 sm:px-5">
+        <div class="h-14 flex items-center justify-between">
+          <a href="#home" class="flex items-center gap-3 font-extrabold tracking-tight">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl ring-gradient">
+              <span class="text-sm">NT</span>
+            </span>
+            <span class="text-[15px] sm:text-base">Nawar Tlay</span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-6 text-sm text-[color:var(--muted)]">
+            <a class="hover:text-white transition" href="#about">About</a>
+            <a class="hover:text-white transition" href="#skills">Skills</a>
+            <a class="hover:text-white transition" href="#projects">Projects</a>
+            <a class="hover:text-white transition" href="#cp">CP</a>
+            <a class="hover:text-white transition" href="#contact">Contact</a>
+          </nav>
+
+          <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden hidden pb-4">
+          <div class="grid gap-2 text-sm text-[color:var(--muted)]">
+            <a class="py-2 hover:text-white transition" href="#about">About</a>
+            <a class="py-2 hover:text-white transition" href="#skills">Skills</a>
+            <a class="py-2 hover:text-white transition" href="#projects">Projects</a>
+            <a class="py-2 hover:text-white transition" href="#cp">Competitive Programming</a>
+            <a class="py-2 hover:text-white transition" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
+    <!-- HERO -->
+    <section id="home" class="pt-10 sm:pt-14 pb-12 sm:pb-16">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 reveal">
+          <div class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full border border-white/10 bg-white/5">
+            <span class="h-1.5 w-1.5 rounded-full" style="background: var(--accentC)"></span>
+            Backend-focused • Open to internships
+          </div>
+
+          <h1 class="mt-5 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
+            Building <span class="u">scalable backends</span><br class="hidden sm:block" />
+            with Laravel & REST APIs.
+          </h1>
+
+          <p class="mt-5 text-[color:var(--muted)] leading-relaxed">
+            Software Engineering student with hands-on experience in backend development using <span class="font-semibold text-white">Laravel</span>,
+            <span class="font-semibold text-white">PHP</span>, and <span class="font-semibold text-white">RESTful APIs</span>.
+            Strong background in competitive programming and building efficient systems.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="mailto:tlynwar6@gmail.com" class="inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold text-sm text-black"
+               style="background: linear-gradient(90deg, var(--accentA), var(--accentB));">
+              Email
+            </a>
+
+            <!-- Placeholders: replace later -->
+            <a href="https://github.com/your-username" target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+              GitHub
+            </a>
+
+            <a href="https://codeforces.com/profile/your-handle" target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+              Codeforces
+            </a>
+
+            <!-- Upload CV in the repo root as "cv.pdf" -->
+            <a href="./cv.pdf" target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+              Download CV
+            </a>
+          </div>
+
+          <div class="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[color:var(--muted)]">
+            <span>📍 Damascus, Syria</span>
+            <span>📞 +963 939 174 973</span>
+            <span>🎓 Expected Graduation: 2026</span>
+          </div>
+
+          <div class="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
+            <div class="card p-4">
+              <p class="font-bold">Laravel</p>
+              <p class="mt-1 text-[color:var(--muted)]">Sanctum • APIs</p>
+            </div>
+            <div class="card p-4">
+              <p class="font-bold">REST</p>
+              <p class="mt-1 text-[color:var(--muted)]">JSON • Postman</p>
+            </div>
+            <div class="card p-4">
+              <p class="font-bold">CP</p>
+              <p class="mt-1 text-[color:var(--muted)]">SVU-CPC Bronze ×2</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column: compact "stack + highlights" (no personal photo) -->
+        <div class="lg:col-span-5 reveal">
+          <div class="ring-gradient card p-6 shadow-glow">
+            <h2 class="text-sm font-extrabold tracking-wide uppercase text-white/90">What I deliver</h2>
+
+            <div class="mt-4 grid gap-3 text-sm text-[color:var(--muted)]">
+              <div class="flex gap-3">
+                <span class="mt-0.5">⚡</span>
+                <p><span class="text-white font-semibold">Clean APIs</span> with authentication, RBAC, and documentation-ready responses.</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="mt-0.5">🧩</span>
+                <p><span class="text-white font-semibold">Scalable architecture</span> with maintainable modules and clear boundaries.</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="mt-0.5">🔒</span>
+                <p><span class="text-white font-semibold">Secure access</span> using Laravel Sanctum and best practices.</p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <p class="text-xs font-bold uppercase tracking-wide text-white/80">Core stack</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                <span class="tag">Laravel</span>
+                <span class="tag">PHP</span>
+                <span class="tag">MySQL</span>
+                <span class="tag">REST APIs</span>
+                <span class="tag">Git</span>
+                <span class="tag">Postman</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 card p-6 reveal">
+            <p class="text-xs font-bold uppercase tracking-wide text-white/80">Quick links</p>
+            <div class="mt-3 grid gap-2 text-sm">
+              <a class="hover:underline" href="#projects">→ Featured Projects</a>
+              <a class="hover:underline" href="#cp">→ Competitive Programming</a>
+              <a class="hover:underline" href="#contact">→ Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-12 sm:py-16">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-4 reveal">
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">About</h2>
+          <p class="mt-3 text-[color:var(--muted)]">
+            A backend-minded engineer who loves building systems that are clean, fast, and reliable.
+          </p>
+        </div>
+
+        <div class="lg:col-span-8 reveal">
+          <div class="card p-6 sm:p-8">
+            <p class="text-[color:var(--muted)] leading-relaxed">
+              I’m <span class="font-semibold text-white">Nawar Tlay</span>, a Software Engineering student at Damascus University.
+              I focus on backend development using <span class="font-semibold text-white">Laravel</span> and building
+              production-style <span class="font-semibold text-white">RESTful APIs</span> with proper authentication, role-based access,
+              and scalable structure.
+            </p>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+              <div class="card p-4">
+                <p class="font-bold">Education</p>
+                <p class="mt-1 text-[color:var(--muted)]">
+                  Damascus University — B.Sc. in Software Engineering<br />
+                  11/2021 — Present (Expected 2026)
+                </p>
+              </div>
+              <div class="card p-4">
+                <p class="font-bold">Focus</p>
+                <p class="mt-1 text-[color:var(--muted)]">
+                  API design • Auth & RBAC • Data modeling • Clean architecture
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="tag">Backend</span>
+              <span class="tag">REST</span>
+              <span class="tag">Laravel Sanctum</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Competitive Programming</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-12 sm:py-16">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-4 reveal">
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Skills</h2>
+          <p class="mt-3 text-[color:var(--muted)]">Languages, frameworks, and tools I use.</p>
+        </div>
+
+        <div class="lg:col-span-8 reveal">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="card p-6">
+              <p class="font-bold">Languages</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tag">C/C++</span>
+                <span class="tag">PHP</span>
+                <span class="tag">Java</span>
+                <span class="tag">SQL</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+              </div>
+            </div>
+
+            <div class="card p-6">
+              <p class="font-bold">Frameworks / Libraries</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tag">Laravel</span>
+                <span class="tag">React.js</span>
+                <span class="tag">Bootstrap</span>
+              </div>
+            </div>
+
+            <div class="card p-6">
+              <p class="font-bold">Databases</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tag">MySQL</span>
+              </div>
+            </div>
+
+            <div class="card p-6">
+              <p class="font-bold">Tools</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tag">Git</span>
+                <span class="tag">Postman</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-12 sm:py-16">
+      <div class="flex items-end justify-between gap-6 reveal">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Projects</h2>
+          <p class="mt-3 text-[color:var(--muted)]">
+            Selected backend projects. Links are placeholders — replace later.
+          </p>
+        </div>
+        <a href="https://github.com/your-username" target="_blank" rel="noreferrer"
+           class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+          View GitHub
+        </a>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="mt-6 flex flex-wrap gap-2 reveal" role="tablist" aria-label="Project filters">
+        <button class="filterBtn tag" data-filter="all" aria-pressed="true">All</button>
+        <button class="filterBtn tag" data-filter="laravel" aria-pressed="false">Laravel</button>
+        <button class="filterBtn tag" data-filter="api" aria-pressed="false">REST API</button>
+        <button class="filterBtn tag" data-filter="auth" aria-pressed="false">Auth & RBAC</button>
+      </div>
+
+      <div class="mt-6 grid lg:grid-cols-2 gap-5">
+        <!-- MediBridge -->
+        <article class="project card p-6 reveal" data-tags="laravel api auth">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="text-lg font-bold">MediBridge</h3>
+            <span class="tag">Backend System</span>
+          </div>
+
+          <p class="mt-3 text-[color:var(--muted)] leading-relaxed">
+            Backend system for managing pharmacy and storehouse operations.
+          </p>
+
+          <ul class="mt-4 space-y-2 text-sm text-[color:var(--muted)]">
+            <li>• Authentication, order & medicine management</li>
+            <li>• Notifications, role-based access control</li>
+            <li>• Focused on scalable APIs and reliable communication</li>
+          </ul>
+
+          <div class="mt-5 flex flex-wrap gap-2 text-xs">
+            <span class="tag">Laravel</span>
+            <span class="tag">PHP</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">REST</span>
+            <span class="tag">JSON</span>
+            <span class="tag">Sanctum</span>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+            <a class="hover:underline" href="https://example.com/medibridge" target="_blank" rel="noreferrer">Live / Demo (placeholder)</a>
+            <a class="hover:underline" href="https://github.com/your-username/medibridge" target="_blank" rel="noreferrer">Source (GitHub)</a>
+          </div>
+        </article>
+
+        <!-- Sky_Job -->
+        <article class="project card p-6 reveal" data-tags="laravel api auth">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="text-lg font-bold">Sky_Job</h3>
+            <span class="tag">Job Platform</span>
+          </div>
+
+          <p class="mt-3 text-[color:var(--muted)] leading-relaxed">
+            System to manage companies and employees with job search functionality.
+          </p>
+
+          <ul class="mt-4 space-y-2 text-sm text-[color:var(--muted)]">
+            <li>• Authentication, profiles, job posts, application tracking</li>
+            <li>• Notifications and admin panel</li>
+            <li>• Rating system for transparency between companies and employees</li>
+          </ul>
+
+          <div class="mt-5 flex flex-wrap gap-2 text-xs">
+            <span class="tag">Laravel</span>
+            <span class="tag">PHP</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">REST</span>
+            <span class="tag">JSON</span>
+            <span class="tag">Sanctum</span>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+            <a class="hover:underline" href="https://example.com/skyjob" target="_blank" rel="noreferrer">Live / Demo (placeholder)</a>
+            <a class="hover:underline" href="https://github.com/your-username/sky_job" target="_blank" rel="noreferrer">Source (GitHub)</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-6 sm:hidden reveal">
+        <a href="https://github.com/your-username" target="_blank" rel="noreferrer"
+           class="inline-flex w-full items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+          View GitHub
+        </a>
+      </div>
+    </section>
+
+    <!-- Competitive Programming -->
+    <section id="cp" class="py-12 sm:py-16">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-4 reveal">
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Competitive Programming</h2>
+          <p class="mt-3 text-[color:var(--muted)]">Highlights and participation.</p>
+        </div>
+
+        <div class="lg:col-span-8 reveal">
+          <div class="card p-6 sm:p-8">
+            <ul class="space-y-3 text-[color:var(--muted)]">
+              <li class="flex gap-3"><span class="mt-1">🏅</span><span><span class="text-white font-semibold">Bronze Medalist</span> twice — SVU‑CPC</span></li>
+              <li class="flex gap-3"><span class="mt-1">✅</span><span><span class="text-white font-semibold">Qualified</span> to participate in SCPC</span></li>
+            </ul>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3 text-sm font-semibold">
+              <!-- Placeholders: replace later -->
+              <a class="hover:underline" href="https://icpc.global/" target="_blank" rel="noreferrer">ICPC (placeholder)</a>
+              <span class="text-white/20">•</span>
+              <a class="hover:underline" href="https://codeforces.com/profile/your-handle" target="_blank" rel="noreferrer">Codeforces (placeholder)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="pt-12 pb-16">
+      <div class="card p-6 sm:p-10 reveal">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-6">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Let’s build something solid</h2>
+            <p class="mt-3 text-[color:var(--muted)]">
+              I’m available for internships, backend roles, and freelance API work.
+            </p>
+
+            <div class="mt-6 grid gap-2 text-sm">
+              <a class="hover:underline font-semibold" href="mailto:tlynwar6@gmail.com">tlynwar6@gmail.com</a>
+              <span class="text-[color:var(--muted)]">Damascus, Syria</span>
+              <span class="text-[color:var(--muted)]">+963 939 174 973</span>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <button id="copyEmailBtn"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-sm font-semibold">
+                Copy Email
+              </button>
+
+              <a class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-black text-sm font-extrabold"
+                 style="background: linear-gradient(90deg, var(--accentA), var(--accentB));"
+                 href="mailto:tlynwar6@gmail.com?subject=Portfolio%20Contact&body=Hi%20Nawar%2C%0A%0A">
+                Send Email
+              </a>
+            </div>
+
+            <p id="copyToast" class="mt-3 text-xs text-[color:var(--muted)] hidden">Copied ✅</p>
+          </div>
+
+          <div class="lg:col-span-6">
+            <form class="grid gap-4" onsubmit="return openMail(this)">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <label class="grid gap-1 text-sm">
+                  <span class="font-semibold">Name</span>
+                  <input name="name" required
+                         class="h-11 rounded-xl border border-white/10 bg-white/5 px-3 text-white placeholder-white/40"
+                         placeholder="Your name" />
+                </label>
+                <label class="grid gap-1 text-sm">
+                  <span class="font-semibold">Email</span>
+                  <input name="email" type="email" required
+                         class="h-11 rounded-xl border border-white/10 bg-white/5 px-3 text-white placeholder-white/40"
+                         placeholder="you@example.com" />
+                </label>
+              </div>
+
+              <label class="grid gap-1 text-sm">
+                <span class="font-semibold">Message</span>
+                <textarea name="message" rows="4" required
+                          class="rounded-xl border border-white/10 bg-white/5 p-3 text-white placeholder-white/40"
+                          placeholder="Tell me what you want to build..."></textarea>
+              </label>
+
+              <button type="submit"
+                class="inline-flex items-center justify-center h-11 rounded-xl font-extrabold text-black"
+                style="background: linear-gradient(90deg, var(--accentA), var(--accentB));">
+                Send
+              </button>
+
+              <p class="text-xs text-[color:var(--muted)]">This form opens your email client (no backend needed).</p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <footer class="py-10 text-center text-sm text-white/50">
+        © <span id="year"></span> Nawar Tlay — Crafted with Tailwind
+      </footer>
+    </section>
+  </main>
+
+  <!-- Back to top -->
+  <a href="#home"
+     class="fixed bottom-5 right-5 z-50 inline-flex items-center justify-center h-11 w-11 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+     aria-label="Back to top" title="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-7 7m7-7l7 7"/>
+    </svg>
+  </a>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.classList.add('show');
+      }
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Contact form opens mail client
+    function openMail(form) {
+      const subject = encodeURIComponent(`Portfolio Contact: ${form.name.value.trim()}`);
+      const body = encodeURIComponent(
+        `Name: ${form.name.value.trim()}\nEmail: ${form.email.value.trim()}\n\n${form.message.value.trim()}`
+      );
+      window.location.href = `mailto:tlynwar6@gmail.com?subject=${subject}&body=${body}`;
+      return false;
+    }
+    window.openMail = openMail;
+
+    // Copy email
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const toast = document.getElementById('copyToast');
+    copyBtn?.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText('tlynwar6@gmail.com');
+        toast.classList.remove('hidden');
+        setTimeout(()=>toast.classList.add('hidden'), 1600);
+      }catch(e){
+        alert('Could not copy. Please copy manually: tlynwar6@gmail.com');
+      }
+    });
+
+    // Projects filter
+    const filterBtns = document.querySelectorAll('.filterBtn');
+    const projects = document.querySelectorAll('.project');
+    function setPressed(btn){
+      filterBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+    }
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter;
+        setPressed(btn);
+        projects.forEach(p => {
+          const tags = (p.dataset.tags || '').split(' ');
+          const show = (f === 'all') || tags.includes(f);
+          p.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
