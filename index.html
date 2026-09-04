@@ -237,13 +237,16 @@
     .hero-stack-icon {
       width: 42px;
       height: 42px;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 6px;
       color: var(--white);
       background: var(--navy);
       font-size: 12px;
       font-weight: 900;
+      line-height: 1;
+      text-align: center;
     }
 
     .hero-stack-item:nth-child(2) .hero-stack-icon { background: var(--teal); }
@@ -1030,28 +1033,28 @@
         <p class="hero-visual-title">Engineering focus</p>
         <div class="hero-stack">
           <div class="hero-stack-item">
-            <span class="hero-stack-icon"> API</span>
+            <span class="hero-stack-icon">API</span>
             <div>
               <strong>Backend platforms</strong>
               <span>Business rules, data, transactions</span>
             </div>
           </div>
           <div class="hero-stack-item">
-            <span class="hero-stack-icon"> DB</span>
+            <span class="hero-stack-icon">DB</span>
             <div>
               <strong>Data-backed systems</strong>
               <span>MySQL, reporting, consistency</span>
             </div>
           </div>
           <div class="hero-stack-item">
-            <span class="hero-stack-icon"> RT</span>
+            <span class="hero-stack-icon">RT</span>
             <div>
               <strong>Real-time workflows</strong>
               <span>Voice, WebSocket, integrations</span>
             </div>
           </div>
           <div class="hero-stack-item">
-            <span class="hero-stack-icon"> UI</span>
+            <span class="hero-stack-icon">UI</span>
             <div>
               <strong>Product interfaces</strong>
               <span>React, Next.js, responsive views</span>
